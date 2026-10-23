@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+  <body>
+    <span id="total-count">2 concursos encontrados</span>
+    <main id="contenido-concursos">
+      <div class="concurso-lista">
+        <article class="concurso-card">
+          <h3 class="concurso-titulo">Analista de Sistemas</h3>
+          <span class="concurso-id">ID 00123</span>
+          <span class="info-value-entidad">Ministerio de Prueba</span>
+          <span class="pill-estado estado-activo">En Postulación</span>
+          <div class="concurso-footer">
+            <span>Inicio de Postulación: 03/08/2026 08:30</span>
+            <span>Fin de Postulación: 03/11/2026 15:30</span>
+          </div>
+          <button class="concurso-ver-detalle btn-open-url" data-url="/media/documentos/bases-123.pdf" onclick="window.open(this.dataset.url, '_blank')">Ver perfil</button>
+          <a class="concurso-ver-detalle" href="/publicaciones/info00123/4788/">Ver proceso</a>
+        </article>
+        <article class="concurso-card">
+          <h3 class="concurso-titulo">Técnico Informático</h3>
+          <span class="concurso-id">ID 124</span>
+          <span class="info-value-entidad">Otra Institución</span>
+          <span class="pill-estado">En Evaluación</span>
+          <div class="concurso-footer">
+            <span>Inicio de Postulación: 04/08/2026 08:00</span>
+            <span>Fin de Postulación: 04/11/2026 16:00</span>
+          </div>
+          <button class="concurso-ver-detalle btn-open-url" data-url="/media/documentos/bases-124.pdf" onclick="window.open(this.dataset.url, '_blank')">Ver perfil</button>
+          <a class="concurso-ver-detalle" href="/publicaciones/info00124/4789/">Ver proceso</a>
+        </article>
+      </div>
+    </main>
+    <nav id="pager-nav" class="pager">
+      <a class="pager-link js-page-link" aria-label="Ir a la página siguiente" href="?page=2&amp;modo=lista">Siguiente</a>
+      <a class="pager-link js-page-link" aria-label="Ir a la última página" href="?page=2&amp;modo=lista">2</a>
+      <span>1 de 2</span>
+    </nav>
+  </body>
+</html>
