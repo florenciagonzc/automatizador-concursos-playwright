@@ -1,10 +1,9 @@
 <!--
 Sync Impact Report
-- Version change: sin ratificar → 1.0.0 (constitución inicial)
-- Principios definidos: modularidad y resiliencia del scraping; extracción y
-  estructuración de documentos; calidad y manejo explícito de errores;
-  desarrollo guiado por especificaciones; pruebas y trazabilidad.
-- Secciones añadidas: Restricciones técnicas y operativas; Flujo de desarrollo.
+- Version change: 1.0.0 → 1.1.0
+- Principios modificados: II. Scraping modular, resiliente y responsable;
+  III. Documentos y datos verificables; V. Pruebas y trazabilidad de resultados.
+- Secciones añadidas: ninguna.
 - Secciones eliminadas: ninguna.
 - TODOs pendientes: ninguno.
 -->
@@ -25,25 +24,32 @@ vacantes o el portal.
 ### II. Scraping modular, resiliente y responsable
 La automatización MUST usar Python y Playwright con responsabilidades separadas
 para navegación, extracción, transformación y persistencia. Toda espera de
-navegación o elemento MUST tener un tiempo límite explícito. Los reintentos
-MUST ser acotados, aplicarse solo a fallos transitorios y operaciones seguras
-para repetir, y usar una pausa creciente; los errores permanentes MUST
-propagarse. Los selectores MUST priorizar roles, etiquetas y atributos estables
-frente a la estructura frágil del DOM. La extracción MUST detectar resultados
-ausentes o cambios estructurales y fallar con contexto útil, no devolver datos
-vacíos como si fueran válidos. La automatización MUST respetar las condiciones
-de acceso y la disponibilidad del portal, evitando solicitudes innecesarias y
-cualquier intento de eludir sus controles.
+navegación o elemento MUST declarar la condición esperada y un tiempo límite
+explícito. Los reintentos MUST ser acotados, aplicarse solo a fallos transitorios
+y operaciones seguras para repetir, y usar una pausa creciente; cada intento
+fallido y el agotamiento de reintentos MUST quedar identificados en el error o
+registro correspondiente. Los errores permanentes MUST propagarse. Los
+selectores MUST priorizar roles, etiquetas y atributos estables frente a la
+estructura frágil del DOM, y las suposiciones sobre su estructura MUST quedar
+aisladas en los componentes de extracción. La extracción MUST detectar
+resultados ausentes o cambios estructurales y fallar con contexto útil, no
+devolver datos vacíos como si fueran válidos. Las pruebas MUST cubrir los
+contratos de extracción con datos locales para detectar roturas ante cambios de
+estructura sin depender del portal en vivo. La automatización MUST respetar las
+condiciones de acceso y la disponibilidad del portal, evitando solicitudes
+innecesarias y cualquier intento de eludir sus controles.
 
 ### III. Documentos y datos verificables
 Los PDF descargados MUST procesarse con pdfplumber, validando que el archivo
-exista, sea legible y produzca contenido utilizable antes de extraer campos.
-Los datos extraídos MUST normalizarse y validarse contra un esquema explícito
-antes de estructurarse con Pandas. Cada registro MUST conservar referencias
-trazables a su vacante y documento fuente. PDF corruptos, vacíos, ilegibles o
-con campos inesperados MUST generar errores identificables; no se permite
-silenciar fallos ni presentar una extracción incompleta como resultado
-confiable.
+exista, sea legible y produzca contenido utilizable antes de extraer campos;
+los documentos sin texto utilizable MUST identificarse como fallidos, no como
+vacantes sin datos. Los datos extraídos MUST normalizarse y validarse contra un
+esquema explícito antes de estructurarse con Pandas. El resultado tabular MUST
+conservar columnas y tipos acordes con ese esquema, incluso cuando no haya
+registros válidos. Cada registro MUST conservar referencias trazables a su
+vacante y documento fuente. PDF corruptos, vacíos, ilegibles o con campos
+inesperados MUST generar errores identificables; no se permite silenciar fallos
+ni presentar una extracción incompleta como resultado confiable.
 
 ### IV. Código limpio y fallos explícitos
 El código MUST mantener módulos pequeños con responsabilidades claras, nombres
@@ -59,12 +65,14 @@ defecto que conviertan un fallo en un resultado exitoso aparente.
 Los componentes de navegación, extracción, análisis y persistencia MUST poder
 probarse de forma independiente. Los cambios MUST incluir pruebas para sus
 criterios de aceptación y casos de fallo relevantes, usando datos de prueba
-locales cuando no se necesite acceder al portal. Las ejecuciones MUST permitir
-identificar qué vacante y archivo originaron cada dato y comunicar claramente
-los fallos parciales. La selección de vacantes MUST considerar perfiles de
-Ingeniería Informática y TI, y también cualquier vacante que no requiera
-experiencia laboral previa; MUST distinguir «sin experiencia requerida» de
-información de experiencia ausente o ambigua.
+locales cuando no se necesite acceder al portal. Las pruebas MUST comprobar que
+un cambio estructural, un PDF no procesable o un error de red o E/S no se
+conviertan en resultados vacíos presentados como válidos. Las ejecuciones MUST
+permitir identificar qué vacante y archivo originaron cada dato y comunicar
+claramente los fallos parciales. La selección de vacantes MUST considerar
+perfiles de Ingeniería Informática y TI, y también cualquier vacante que no
+requiera experiencia laboral previa; MUST distinguir «sin experiencia
+requerida» de información de experiencia ausente o ambigua.
 
 ## Restricciones técnicas y operativas
 
@@ -109,4 +117,4 @@ PATCH para aclaraciones sin cambio de obligaciones. No se debe implementar una
 excepción como atajo: debe aprobarse y reflejarse primero en la constitución y
 en los artefactos SDD afectados.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-22 | **Last Amended**: 2026-10-22
+**Version**: 1.1.0 | **Ratified**: 2026-10-22 | **Last Amended**: 2026-10-23
